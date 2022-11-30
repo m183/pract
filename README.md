@@ -1,2 +1,51 @@
-# pract
-30-nov
+#include <sys/types.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+
+int main(int argc, char *argv[])
+{
+  pid_t pid;
+  int status;
+  pid = fork();
+  if(pid==0)
+    {
+      printf("[H1] Dormiré 5 seg\n");
+      sleep(5);
+      exit(5);
+    }
+    else
+    {
+      printf("[P] Esperaré al H1\n");
+      while(pid != wait(&status));
+    }
+  pid = fork();
+  if(pid== 0)
+  {
+    printf("[H2] Dormiré 1 seg\n");
+    sleep(1);
+    exit(1);
+  }
+  else
+  {
+    printf("[Padre] Esperaré al H2\n");
+    while(pid != wait(&status));
+  }
+}
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
